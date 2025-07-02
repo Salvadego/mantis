@@ -28,6 +28,7 @@ type TimesheetResponse struct {
 
 type TimesheetsResponse struct {
 	TimesheetID       int     `json:"timesheetId"`
+	TimesheetType     string  `json:"timesheetType"`
 	UserID            int     `json:"userId"`
 	Quantity          float64 `json:"quantity"`
 	TicketNo          string  `json:"ticketNo"`
