@@ -63,3 +63,63 @@ type Employee struct {
 	EmployeeCode int     `json:"employeeCode"`
 	DailyJourney float64 `json:"dailyJourney"`
 }
+
+type TicketResponse struct {
+	TicketNumber           string  `json:"objectID"`
+	ProcessType            string  `json:"processType"`
+	Status                 string  `json:"ZDesc_Stat"`
+	Description            string  `json:"description"`
+	Correlation            string  `json:"correlation"`
+	Notificador            string  `json:"notificador"`
+	Processador            string  `json:"processador"`
+	TicketCreated          string  `json:"ticketCreated"`
+	TicketConfirmationDate string  `json:"ticketConfirmationDate"`
+	ZhrStatE0001           float64 `json:"zhrStatE0001"`
+	ZhrStatE0002           float64 `json:"zhrStatE0002"`
+	ZhrStatE0003           float64 `json:"zhrStatE0003"`
+	ZhrStatE0005           float64 `json:"zhrStatE0005"`
+	Priority               string  `json:"priority"`
+	PercSLA                string  `json:"percSLA"`
+	Catergory              string  `json:"catDesc"`
+	Cat01                  string  `json:"cat01"`
+	Cat02                  string  `json:"cat02"`
+	Cat03                  string  `json:"cat03"`
+	Cat04                  string  `json:"cat04"`
+	Cat05                  string  `json:"cat05"`
+	Cat06                  string  `json:"cat06"`
+	Cat07                  string  `json:"cat07"`
+	SoldToPartLis          string  `json:"soldToPartLis"`
+	Comp                   string  `json:"comp"`
+	TicketCustomer         string  `json:"ticketCustomer"`
+	HasDoc                 string  `json:"hasDoc"`
+	ProcessorName1         string  `json:"processorName1"`
+	ProcessorName2         string  `json:"processorName2"`
+	ProcessorName3         string  `json:"processorName3"`
+	ProcessorName4         string  `json:"processorName4"`
+	ProcessorName5         string  `json:"processorName5"`
+	ProcessorID1           string  `json:"processorID1"`
+	ProcessorID2           string  `json:"processorID2"`
+	ProcessorID3           string  `json:"processorID3"`
+	ProcessorID4           string  `json:"processorID4"`
+	ProcessorID5           string  `json:"processorID5"`
+	ConfirmAt              any     `json:"confirmAt"`
+	ZhrLiq                 string  `json:"zhrLiq"`
+	ZhrLiqNet              string  `json:"zhrLiqNet"`
+	ZhrTot                 string  `json:"zhrTot"`
+	ZTotalDias             string  `json:"zTotalDias"`
+	HrsConvertidas         string  `json:"hrsConvertidas"`
+	Mes                    string  `json:"mes"`
+	ExpSLA                 string  `json:"expSLA"`
+	ExpMotivo              string  `json:"expMotivo"`
+	Destaque               string  `json:"destaque"`
+	DestaqueMotivo         string  `json:"destaqueMotivo"`
+	IDContrato             string  `json:"idContrato"`
+	TituloContrato         string  `json:"tituloContrato"`
+	TipoContrato           string  `json:"tipoContrato"`
+	NameDM                 string  `json:"nameDM"`
+	TicketCreatedHr        string  `json:"ticketCreatedHr"`
+	TicketConfirmationHr   string  `json:"ticketConfirmationHr"`
+	ConfirmHr              any     `json:"confirmHr"`
+	Category               string  `json:"category"`
+	SLAGoal                any     `json:"slaGoal"`
+}
