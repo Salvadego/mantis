@@ -8,13 +8,18 @@ type TokenResponse struct {
 	RefreshToken string `json:"refresh_token,omitempty"`
 }
 
+type UserRole struct {
+	ADRoleID int64  `json:"AD_Role_ID"`
+	Name     string `json:"Name"`
+}
+
 type Timesheet struct {
 	UserID              int     `json:"userId"`
 	DateDoc             string  `json:"dateDoc"`
 	SalesOrderLine      int     `json:"salesOrderLine"`
 	TicketNo            string  `json:"ticketNo"`
 	TicketContractTitle string  `json:"ticketContractTitle"`
-	Fase                *string `json:"fase"`
+	Fase                *string `json:"fase,omitempty"`
 	Quantity            float64 `json:"quantity"`
 	TicketDescription   string  `json:"ticketDescription"`
 	Description         string  `json:"description"`

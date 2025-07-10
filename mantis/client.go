@@ -26,8 +26,8 @@ type Client struct {
 	httpClient *http.Client
 	authConfig AuthConfig
 
-	token   string
 	tokenMu sync.RWMutex
+	token   string
 
 	Auth      *AuthService
 	Timesheet *TimesheetService
@@ -80,7 +80,7 @@ func NewClient(authConfig AuthConfig, clientConfig *ClientConfig) *Client {
 	client.Auth = &AuthService{client: client}
 	client.Timesheet = &TimesheetService{client: client}
 	client.Employee = &EmployeeService{client: client}
-	client.Dashboard = &DashboardService{client: client}
+	// client.Dashboard = &DashboardService{client: client}
 
 	return client
 }
@@ -95,6 +95,10 @@ func (c *Client) SetToken(token string) {
 	c.tokenMu.Lock()
 	defer c.tokenMu.Unlock()
 	c.token = token
+}
+
+func (c *Client) SetRoleID(roleID string) {
+	c.roleID = roleID
 }
 
 func (c *Client) doRequest(
@@ -146,6 +150,36 @@ func (c *Client) doRequest(
 	}
 
 	return resp, nil
+}
+
+func (c *Client) GetUserRoles(ctx context.Context, userID int) ([]UserRole, error) {
+	headers := map[string]string{
+		"SourceSystem": "APP",
+	}
+
+	endpoint := fmt.Sprintf(
+		"/api/odata/cam/core/system/v1/UserBasicProfiles(%d)",
+		userID,
+	)
+
+	resp, err := c.doRequest(ctx, http.MethodGet, endpoint, nil, headers)
+	if err != nil {
+		return nil, err
+	}
+
+	var result struct {
+		Value struct {
+			Clients []struct {
+				UserRoles []UserRole `json:"User_Roles"`
+			} `json:"Clients"`
+		} `json:"value"`
+	}
+
+	if err := parseResponse(resp, &result); err != nil {
+		return []UserRole{}, err
+	}
+
+	return result.Value.Clients[0].UserRoles, nil
 }
 
 func parseResponse(resp *http.Response, data any) error {
