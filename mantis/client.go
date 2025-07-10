@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -181,6 +182,11 @@ func (c *Client) GetUserRoles(ctx context.Context, userID int) ([]UserRole, erro
 
 	if err := parseResponse(resp, &result); err != nil {
 		return []UserRole{}, err
+	}
+
+	if len(result.Value.Clients) == 0 {
+		log.Println(result.Value)
+		return []UserRole{}, fmt.Errorf("Empty clients")
 	}
 
 	return result.Value.Clients[0].UserRoles, nil
