@@ -101,6 +101,10 @@ func (c *Client) SetRoleID(roleID string) {
 	c.roleID = roleID
 }
 
+func (c *Client) GetRoleID() string {
+	return c.roleID
+}
+
 func (c *Client) doRequest(
 	ctx context.Context,
 	method,
