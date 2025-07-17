@@ -49,21 +49,20 @@ func (s *TimesheetService) Create(
 
 func (s *TimesheetService) GetTimesheets(
 	ctx context.Context,
-	userID int) ([]TimesheetsResponse, error) {
+	userID int,
+	year int,
+	month time.Month) ([]TimesheetsResponse, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	now := time.Now()
-	currentYear, currentMonth, currentDay := now.Date()
-
 	var startDate, endDate time.Time
 
-	if currentDay > 26 {
-		startDate = time.Date(currentYear, currentMonth, 26, 0, 0, 0, 0, time.UTC)
-		endDate = startDate.AddDate(0, 1, -1)
+	if month == time.December {
+		startDate = time.Date(year, month, 26, 0, 0, 0, 0, time.UTC)
+		endDate = time.Date(year+1, time.January, 25, 0, 0, 0, 0, time.UTC)
 	} else {
-		endDate = time.Date(currentYear, currentMonth, 25, 0, 0, 0, 0, time.UTC)
-		startDate = endDate.AddDate(0, -1, 1)
+		startDate = time.Date(year, month, 26, 0, 0, 0, 0, time.UTC)
+		endDate = time.Date(year, month+1, 25, 0, 0, 0, 0, time.UTC)
 	}
 
 	startDateStr := startDate.Format("2006-01-02T00:00:00Z")
