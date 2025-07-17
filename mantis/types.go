@@ -58,6 +58,9 @@ type ErrorsResponse struct {
 		Status  string `json:"status"`
 		Date    string `json:"date"`
 		Message string `json:"message"`
+		Details []struct {
+			Message string `json:"message"`
+		}
 	} `json:"errors"`
 }
 

@@ -18,12 +18,13 @@ type TimesheetService struct {
 
 func (s *TimesheetService) Create(
 	ctx context.Context,
-	timesheet Timesheet) (ErrorsResponse, error) {
+	timesheet Timesheet) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+
 	reqBody, err := json.Marshal(timesheet)
 	if err != nil {
-		return ErrorsResponse{}, fmt.Errorf("falha ao serializar timesheet: %w", err)
+		return fmt.Errorf("falha ao serializar timesheet: %w", err)
 	}
 
 	headers := map[string]string{
@@ -39,10 +40,11 @@ func (s *TimesheetService) Create(
 		headers,
 	)
 
-	var errors ErrorsResponse
-	err = json.NewDecoder(resp.Body).Decode(&errors)
+	if err != nil {
+		return err
+	}
 
-	return errors, err
+	return parseResponse(resp, nil)
 }
 
 func (s *TimesheetService) GetTimesheets(
