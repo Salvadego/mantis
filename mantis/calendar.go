@@ -12,7 +12,7 @@ type CalendarService struct {
 	client *Client
 }
 
-func (s *CalendarService) GetCalendar(
+func (s *CalendarService) GetNonBusinessDays(
 	ctx context.Context,
 	year int,
 	month time.Month,
