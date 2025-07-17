@@ -57,13 +57,8 @@ func (s *TimesheetService) GetTimesheets(
 
 	var startDate, endDate time.Time
 
-	if month == time.December {
-		startDate = time.Date(year, month, 26, 0, 0, 0, 0, time.UTC)
-		endDate = time.Date(year+1, time.January, 25, 0, 0, 0, 0, time.UTC)
-	} else {
-		startDate = time.Date(year, month, 26, 0, 0, 0, 0, time.UTC)
-		endDate = time.Date(year, month+1, 25, 0, 0, 0, 0, time.UTC)
-	}
+	startDate = time.Date(year, month-1, 26, 0, 0, 0, 0, time.UTC)
+	endDate = time.Date(year, month, 25, 0, 0, 0, 0, time.UTC)
 
 	startDateStr := startDate.Format("2006-01-02T00:00:00Z")
 	endDateStr := endDate.Format("2006-01-02T00:00:00Z")
