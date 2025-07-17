@@ -31,6 +31,7 @@ type Client struct {
 	token   string
 
 	Auth      *AuthService
+	Calendar  *CalendarService
 	Timesheet *TimesheetService
 	Employee  *EmployeeService
 	Dashboard *DashboardService

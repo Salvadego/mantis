@@ -1,7 +1,6 @@
 package mantis
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"strings"
@@ -37,12 +36,4 @@ func (e *APIError) Error() string {
 	}
 
 	return main
-}
-
-func toJSONString(v any) string {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return "could not marshal error"
-	}
-	return string(b)
 }

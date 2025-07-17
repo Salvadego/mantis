@@ -1,11 +1,22 @@
 package mantis
 
+import "time"
+
 type TokenResponse struct {
 	AccessToken  string `json:"access_token"`
 	TokenType    string `json:"token_type"`
 	ExpiresIn    int    `json:"expires_in"`
 	UserId       string `json:"user_id"`
 	RefreshToken string `json:"refresh_token,omitempty"`
+}
+
+type NonBusinessDay struct {
+	NonBusinessDayID int64     `json:"nonBusinessDayId"`
+	OrganizationID   int64     `json:"organizationId"`
+	CountryID        int64     `json:"countryId"`
+	Date             time.Time `json:"date"`
+	TotalHour        int64     `json:"totalHour"`
+	Name             string    `json:"name"`
 }
 
 type UserRole struct {
