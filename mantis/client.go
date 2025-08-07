@@ -73,7 +73,6 @@ func NewClient(authConfig AuthConfig, clientConfig *ClientConfig) *Client {
 	client := &Client{
 		baseURL:    baseURL,
 		language:   language,
-		roleID:     clientConfig.RoleID,
 		userAgent:  userAgent,
 		httpClient: httpClient,
 		authConfig: authConfig,

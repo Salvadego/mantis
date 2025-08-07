@@ -12,7 +12,6 @@ type AuthConfig struct {
 type ClientConfig struct {
 	BaseURL    string
 	Language   string
-	RoleID     string
 	UserAgent  string
 	HTTPClient *http.Client
 }
