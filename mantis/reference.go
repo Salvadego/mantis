@@ -22,11 +22,7 @@ func (s *ReferenceService) GetReferenceTypes(ctx context.Context, filter Referen
 	}
 
 	endpoint := "/api/odata/cam/core/fh/v1/ReferenceList"
-	filters, err := getFilter(filter)
-	if err != nil {
-		return nil, err
-	}
-	filterString := strings.Join(filters, " and ")
+	filterString := fmt.Sprintf("ColumnName eq '%s' and TableName eq '%s'", filter.ColumnName, filter.TableName)
 
 	path := fmt.Sprintf("%s?$filter=%s", endpoint, filterString)
 
