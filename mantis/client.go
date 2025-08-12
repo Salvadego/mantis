@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"reflect"
 	"strings"
 	"sync"
 	"time"
@@ -35,6 +36,7 @@ type Client struct {
 	Timesheet *TimesheetService
 	Employee  *EmployeeService
 	Dashboard *DashboardService
+	Reference *ReferenceService
 }
 
 func NewClient(authConfig AuthConfig, clientConfig *ClientConfig) *Client {
@@ -83,6 +85,7 @@ func NewClient(authConfig AuthConfig, clientConfig *ClientConfig) *Client {
 	client.Employee = &EmployeeService{client: client}
 	client.Dashboard = &DashboardService{client: client}
 	client.Calendar = &CalendarService{client: client}
+	client.Reference = &ReferenceService{client: client}
 
 	return client
 }
@@ -215,4 +218,23 @@ func parseResponse(resp *http.Response, successData any) error {
 	}
 
 	return nil
+}
+
+func getFilter(filter any) ([]string, error) {
+	filterType := reflect.TypeOf(filter)
+	if filterType.Kind() != reflect.Struct {
+		return []string{}, fmt.Errorf("invalid filter type")
+	}
+
+	var filterString []string
+	for i := 0; i < filterType.NumField(); i++ {
+		field := filterType.Field(i)
+		tag := field.Tag.Get(field.Name)
+		if tag == "" {
+			continue
+		}
+		value := reflect.ValueOf(filter).Field(i).Interface()
+		filterString = append(filterString, fmt.Sprintf("%s eq %s", tag, value))
+	}
+	return filterString, nil
 }

@@ -142,3 +142,11 @@ type TicketResponse struct {
 	Category               string  `json:"category"`
 	SLAGoal                any     `json:"slaGoal"`
 }
+
+type ReferenceType struct {
+	ColumnName string `json:"ColumnName"`
+	TableName  string `json:"TableName"`
+	Value      string `json:"value"`
+	Name       string `json:"name"`
+	IsDistinct bool   `json:"Is_Distinct"`
+}
