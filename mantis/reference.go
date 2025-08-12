@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 )
 
 type ReferenceService struct {
@@ -23,7 +24,7 @@ func (s *ReferenceService) GetReferenceTypes(ctx context.Context, filter Referen
 	endpoint := "/api/odata/cam/core/fh/v1/ReferenceList"
 	filterString := fmt.Sprintf("ColumnName eq '%s' and TableName eq '%s'", filter.ColumnName, filter.TableName)
 
-	path := fmt.Sprintf("%s?$filter=%s", endpoint, filterString)
+	path := fmt.Sprintf("%s?$filter=%s", endpoint, url.PathEscape(filterString))
 
 	resp, err := s.client.doRequest(ctx, http.MethodGet, path, nil, headers)
 	if err != nil {
