@@ -46,7 +46,21 @@ type TimesheetsResponse struct {
 	TimesheetID       int     `json:"timesheetId"`
 	TimesheetType     string  `json:"timesheetType"`
 	UserID            int     `json:"userId"`
+	OrgID             int64   `json:"orgId"`
 	Quantity          float64 `json:"quantity"`
+	SalesOrderLine    int64   `json:"salesOrderLine"`
+	SalesOrder        int64   `json:"salesOrder"`
+	ReferenceID       int64   `json:"referenceId"`
+	DocumentNo        string  `json:"documentNo"`
+	NonBusinessDayID  int64   `json:"nonBusinessDayId"`
+	IsSurplusActivity bool    `json:"isSurplusActivity"`
+	IsDuty            bool    `json:"isDuty"`
+	Fase              int64   `json:"fase"`
+	ExternalCode      string  `json:"externalCode"`
+	DocNumWarranty    int64   `json:"docNumWarranty"`
+	IsApproved        bool    `json:"isApproved"`
+	IsProcessed       bool    `json:"isProcessed"`
+	IsActive          bool    `json:"isActive"`
 	TicketNo          string  `json:"ticketNo"`
 	Description       string  `json:"description"`
 	DateDoc           string  `json:"dateDoc"`
