@@ -78,15 +78,27 @@ type ProjectTimesheet struct {
 	ProjectNeedTicket  bool   `json:"projectNeedTicket"`
 }
 
+type ErrorDetail struct {
+	Message string `json:"message"`
+}
+
+type APIErrorItem struct {
+	Status      string        `json:"status"`
+	Date        string        `json:"date"`
+	Type        string        `json:"type"`
+	Code        string        `json:"code"`
+	Message     string        `json:"message"`
+	MoreInfo    string        `json:"moreInfo"`
+	MessageType string        `json:"messageType"`
+	Details     []ErrorDetail `json:"details"`
+}
+
 type ErrorsResponse struct {
-	Errors []struct {
-		Status  string `json:"status"`
-		Date    string `json:"date"`
-		Message string `json:"message"`
-		Details []struct {
-			Message string `json:"message"`
-		}
-	} `json:"errors"`
+	Errors []APIErrorItem `json:"errors"`
+}
+
+func (e ErrorsResponse) IsError() bool {
+	return e.Errors != nil
 }
 
 type Employee struct {

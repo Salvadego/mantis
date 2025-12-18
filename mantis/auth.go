@@ -11,7 +11,7 @@ type AuthService struct {
 	client *Client
 }
 
-func (s *AuthService) Authenticate(ctx context.Context) error {
+func (s *AuthService) Authenticate(ctx context.Context) (TokenResponse, error) {
 	form := url.Values{}
 	form.Add("grant_type", "password")
 	form.Add("client_id", s.client.authConfig.ClientID)
@@ -32,15 +32,15 @@ func (s *AuthService) Authenticate(ctx context.Context) error {
 		headers)
 
 	if err != nil {
-		return err
+		return TokenResponse{}, err
 	}
 
 	var tokenResp TokenResponse
 	if err := parseResponse(resp, &tokenResp); err != nil {
-		return err
+		return TokenResponse{}, err
 	}
 
 	s.client.SetToken(tokenResp.AccessToken)
 
-	return nil
+	return tokenResp, nil
 }

@@ -19,7 +19,7 @@ type APIError struct {
 }
 
 func (e *APIError) Error() string {
-	if len(e.Response.Errors) == 0 {
+	if !e.Response.IsError() || len(e.Response.Errors) == 0 {
 		return fmt.Sprintf("API error: HTTP %d", e.StatusCode)
 	}
 

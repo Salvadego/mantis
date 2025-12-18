@@ -198,20 +198,26 @@ func (c *Client) GetUserRoles(ctx context.Context, userID int) ([]UserRole, erro
 func parseResponse(resp *http.Response, successData any) error {
 	defer resp.Body.Close()
 
-	if resp.StatusCode >= 400 {
-		var errResp ErrorsResponse
-		if err := json.NewDecoder(resp.Body).Decode(&errResp); err != nil {
-			return fmt.Errorf("http %d; invalid error response body: %w", resp.StatusCode, err)
-		}
+	body, err := io.ReadAll(resp.Body)
+	// log.Printf("response body: %s", body)
+	if err != nil {
+		return fmt.Errorf("failed to read response body: %w", err)
+	}
+
+	var errResp ErrorsResponse
+	if err := json.Unmarshal(body, &errResp); err == nil && errResp.IsError() {
 		return &APIError{
 			StatusCode: resp.StatusCode,
 			Response:   errResp,
 		}
 	}
 
+	if resp.StatusCode >= 400 {
+		return fmt.Errorf("http %d; unknown error format", resp.StatusCode)
+	}
+
 	if successData != nil {
-		err := json.NewDecoder(resp.Body).Decode(successData)
-		if err != nil && err != io.EOF {
+		if err := json.Unmarshal(body, successData); err != nil {
 			return fmt.Errorf("failed to parse success body: %w", err)
 		}
 	}
