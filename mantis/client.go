@@ -86,6 +86,7 @@ func NewClient(authConfig AuthConfig, clientConfig *ClientConfig) *Client {
 	client.Dashboard = &DashboardService{client: client}
 	client.Calendar = &CalendarService{client: client}
 	client.Reference = &ReferenceService{client: client}
+	client.Tickets = &TicketService{client: client}
 
 	return client
 }
