@@ -3,6 +3,7 @@ package mantis
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"sync"
@@ -15,17 +16,18 @@ type TicketService struct {
 
 func (s *TicketService) GetTickets(
 	ctx context.Context,
-	userID int,
+	empId int,
 ) ([]TicketsResponse, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
 	endpoint := "api/odata/cam/core/system/v1/MTS_SMTickets"
 	filter := fmt.Sprintf(
-		"$filter=userId eq %d",
-		userID)
+		"$filter=empId eq %d",
+		empId)
 
 	path := fmt.Sprintf("%s?%s", endpoint, url.PathEscape(filter))
+	log.Println(path)
 
 	headers := map[string]string{
 		"SourceSystem": "APP",
