@@ -33,6 +33,7 @@ type Client struct {
 	Auth      *AuthService
 	Calendar  *CalendarService
 	Timesheet *TimesheetService
+	Tickets   *TicketService
 	Employee  *EmployeeService
 	Dashboard *DashboardService
 	Reference *ReferenceService
@@ -213,7 +214,7 @@ func parseResponse(resp *http.Response, successData any) error {
 	}
 
 	if resp.StatusCode >= 400 {
-		return fmt.Errorf("http %d; unknown error format", resp.StatusCode)
+		return fmt.Errorf("http %s", resp.Status)
 	}
 
 	if successData != nil {
@@ -224,5 +225,3 @@ func parseResponse(resp *http.Response, successData any) error {
 
 	return nil
 }
-
-

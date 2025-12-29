@@ -176,3 +176,19 @@ type ReferenceType struct {
 	Name       string `json:"name"`
 	IsDistinct bool   `json:"Is_Distinct"`
 }
+
+type TicketsResponse  struct {
+	TicketNo      string    `json:"ticketNo"`
+	Description   string    `json:"description"`
+	ContractID    string    `json:"contractId"`
+	HourLimit     HourLimit `json:"hourLimit"`
+	PCApproved    string    `json:"pcApproved"`
+	KurzText      string    `json:"kurzText"`
+	ContractTitle string    `json:"contractTitle"`
+	ContractType  string    `json:"contractType"`
+}
+
+type HourLimit struct {
+	Source      string `json:"source"`
+	ParsedValue int64  `json:"parsedValue"`
+}
