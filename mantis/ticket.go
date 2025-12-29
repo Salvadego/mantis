@@ -3,7 +3,6 @@ package mantis
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"sync"
@@ -27,7 +26,7 @@ func (s *TicketService) GetTickets(
 		empId)
 
 	path := fmt.Sprintf("%s?%s", endpoint, url.PathEscape(filter))
-	log.Println(path)
+	// log.Println(path)
 
 	headers := map[string]string{
 		"SourceSystem": "APP",
