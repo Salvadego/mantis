@@ -181,7 +181,10 @@ func (s *DashboardService) GetSupportInfo(
 	ctx context.Context,
 	ticketNo string,
 ) (SupportInfoResponse, error) {
-	endpoint := fmt.Sprintf("/api/odata/cam/core/fh/v1/Supports(%s)", ticketNo)
+	if ticketNo == "" {
+		return SupportInfoResponse{}, fmt.Errorf("Empty ticketno")
+	}
+	endpoint := fmt.Sprintf("/api/odata/cam/core/system/v1/Supports('%s')", ticketNo)
 
 	headers := map[string]string{
 		"SourceSystem": "APP",
