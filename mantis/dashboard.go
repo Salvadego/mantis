@@ -52,6 +52,9 @@ func mergeGetReportOptions(opts *GetReportOptions) *GetReportOptions {
 	if opts.FilterType != "" {
 		def.FilterType = opts.FilterType
 	}
+	if opts.FilterContractID != "" {
+		def.FilterContractID = opts.FilterContractID
+	}
 	if opts.FilterUserID != "" {
 		def.FilterUserID = opts.FilterUserID
 	}
