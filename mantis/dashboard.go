@@ -150,7 +150,7 @@ func (s *DashboardService) GetReport(
 
 func (s *DashboardService) GetReportContracts(
 	ctx context.Context,
-) ([]ContractResponse, error) {
+) ([]LtContract, error) {
 
 	endpoint := "/api/odata/cam/core/fh/v1/ReportContracts"
 
@@ -171,5 +171,5 @@ func (s *DashboardService) GetReportContracts(
 		return nil, err
 	}
 
-	return result.Value, nil
+	return result.Value[0].LtContracts, nil
 }
