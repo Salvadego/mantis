@@ -97,7 +97,7 @@ func (s *EmployeeService) GetEmployeeByName(
 	return result.Value[0], nil
 }
 
-func (s *EmployeeService) GetEmployeeByAdUserID(
+func (s *EmployeeService) GetEmployeeList(
 	ctx context.Context,
 	supervisorID *int,
 ) ([]S_Employee, error) {
