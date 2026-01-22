@@ -176,3 +176,29 @@ func (s *DashboardService) GetReportContracts(
 
 	return result.Value[0].LtContracts, nil
 }
+
+func (s *DashboardService) GetSupportInfo(
+	ctx context.Context,
+	ticketNo string,
+) (SupportInfoResponse, error) {
+	endpoint := fmt.Sprintf("/api/odata/cam/core/fh/v1/Supports(%s)", ticketNo)
+
+	headers := map[string]string{
+		"SourceSystem": "APP",
+	}
+
+	resp, err := s.client.doRequest(ctx, http.MethodGet, endpoint, nil, headers)
+	if err != nil {
+		return SupportInfoResponse{}, err
+	}
+
+	var result struct {
+		Value SupportInfoResponse `json:"value"`
+	}
+
+	if err := parseResponse(resp, &result); err != nil {
+		return SupportInfoResponse{}, err
+	}
+
+	return result.Value, nil
+}

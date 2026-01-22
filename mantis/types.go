@@ -219,3 +219,94 @@ type S_Employee struct {
 	DataFim      *time.Time `json:"Data_Fim"`
 	CUser        string     `json:"C_User"`
 }
+
+type SupportInfoResponse struct {
+	Description            string         `json:"Description"`
+	Priority               string         `json:"Priority"`
+	Category               any            `json:"Category"`
+	CategoryDescription    any            `json:"Category_Description"`
+	Text                   any            `json:"Text"`
+	ProcessType            string         `json:"Process_Type"`
+	Reference              any            `json:"Reference"`
+	ObjectID               string         `json:"Object_ID"`
+	GUID                   string         `json:"Guid"`
+	UserStatus             string         `json:"User_Status"`
+	Attachments            []Attachment   `json:"Attachments"`
+	File                   []any          `json:"File"`
+	CreatedAt              time.Time      `json:"Created_At"`
+	CreatedBy              CreatedBy      `json:"Created_By"`
+	ChangedBy              any            `json:"Changed_By"`
+	ChangedAt              time.Time      `json:"Changed_At"`
+	CategoryID             string         `json:"Category_ID"`
+	ContractID             any            `json:"Contract_ID"`
+	AttachmentNo           any            `json:"Attachment_No"`
+	Sla                    any            `json:"Sla"`
+	DateReport             any            `json:"Date_Report"`
+	Processor              any            `json:"Processor"`
+	PriorityDescription    string         `json:"Priority_Description"`
+	UserStatusDescription  string         `json:"User_Status_Description"`
+	ProcessTypeDescription string         `json:"Process_Type_Description"`
+	Texts                  []Text         `json:"Texts"`
+	Processadores          []Processadore `json:"Processadores"`
+	SubstatusDescription   string         `json:"Substatus_Description"`
+	DateEndPlan            time.Time      `json:"Date_End_Plan"`
+	DateStartPlan          time.Time      `json:"Date_Start_Plan"`
+	CreatedAtFrom          any            `json:"Created_At_From"`
+	CreatedAtTo            any            `json:"Created_At_To"`
+	ChangedAtFrom          any            `json:"Changed_At_From"`
+	ChangedAtTo            any            `json:"Changed_At_To"`
+	VisibleUpdate          bool           `json:"Visible_Update"`
+	VisibleRef             bool           `json:"Visible_Ref"`
+	VisibleApprove         bool           `json:"Visible_Approve"`
+	VisibleDisapprove      bool           `json:"Visible_Disapprove"`
+	VisibleClose           bool           `json:"Visible_Close"`
+	EnableUpdate           bool           `json:"Enable_Update"`
+	EnableRef              bool           `json:"Enable_Ref"`
+	EnableApprove          bool           `json:"Enable_Approve"`
+	EnableDisapprove       bool           `json:"Enable_Disapprove"`
+	EnableClose            bool           `json:"Enable_Close"`
+	DocumentFlows          []any          `json:"Document_Flows"`
+	ProcessorDetail        CreatedBy      `json:"Processor_Detail"`
+	EvIsPC                 string         `json:"Ev_Is_Pc"`
+	EvPCStatDesc           string         `json:"Ev_Pc_Stat_Desc"`
+	FilterProcessType      any            `json:"Filter_Process_Type"`
+	TotHrChamado           string         `json:"Tot_Hr_Chamado"`
+	TotHrPC                string         `json:"Tot_Hr_PC"`
+	Baseline               string         `json:"Baseline"`
+	TotHrAprovadaPC        string         `json:"Tot_Hr_Aprovada_PC"`
+	TicketNumber           any            `json:"Ticket_Number"`
+}
+
+type Attachment struct {
+	GUID        string    `json:"Guid"`
+	FileContent string    `json:"File_Content"`
+	FileName    string    `json:"File_Name"`
+	CreatedBy   CreatedBy `json:"Created_By"`
+	CreatedAt   time.Time `json:"Created_At"`
+}
+
+type CreatedBy struct {
+	ADUserID         int64  `json:"AD_User_ID"`
+	Name             string `json:"Name"`
+	Description      string `json:"Description"`
+	CellPhone        any    `json:"CellPhone"`
+	Phone            string `json:"Phone"`
+	Email            string `json:"Email"`
+	UserOtherService string `json:"User_Other_Service"`
+	PictureID        int64  `json:"Picture_ID"`
+	BusinessUnitID   *int64 `json:"BusinessUnit_ID"`
+}
+
+type Processadore struct {
+	UserInformation CreatedBy `json:"User_Information"`
+}
+
+type Text struct {
+	UserInformation *CreatedBy `json:"User_Information"`
+	Text            string     `json:"Text"`
+	TDFCreatedAt    time.Time  `json:"TDFCreated_At"`
+	TDFUser         string     `json:"TDFUser"`
+	GUID            string     `json:"Guid"`
+	TdID            string     `json:"TD_ID"`
+	Description     string     `json:"Description"`
+}
