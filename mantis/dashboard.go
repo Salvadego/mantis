@@ -124,7 +124,7 @@ func (s *DashboardService) GetReport(
 
 	var filter string
 	if len(filterParts) > 0 {
-		filter = "$filter=" + url.QueryEscape(strings.Join(filterParts, " and "))
+		filter = "$filter=" + url.PathEscape(strings.Join(filterParts, " and "))
 	}
 
 	path := fmt.Sprintf("%s?%s", endpoint, filter)

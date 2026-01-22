@@ -122,7 +122,7 @@ func (s *EmployeeService) GetEmployeeList(
 	query := strings.Join(queryParts, "&")
 	path := endpoint
 	if query != "" {
-		path = fmt.Sprintf("%s?%s", endpoint, query)
+		path = fmt.Sprintf("%s?%s", endpoint, url.PathEscape(query))
 	}
 
 	resp, err := s.client.doRequest(ctx, http.MethodGet, path, nil, headers)
