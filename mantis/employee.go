@@ -96,3 +96,47 @@ func (s *EmployeeService) GetEmployeeByName(
 
 	return result.Value[0], nil
 }
+
+func (s *EmployeeService) GetEmployeeByAdUserID(
+	ctx context.Context,
+	supervisorID *int,
+) ([]S_Employee, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	headers := map[string]string{
+		"SourceSystem": "APP",
+	}
+
+	endpoint := "/api/odata/cam/core/fh/v1/EmployeeList"
+
+	var queryParts []string
+
+	if supervisorID != nil {
+		queryParts = append(
+			queryParts,
+			fmt.Sprintf("$filter=Filter_Supervisor_ID eq %d", *supervisorID),
+		)
+	}
+
+	query := strings.Join(queryParts, "&")
+	path := endpoint
+	if query != "" {
+		path = fmt.Sprintf("%s?%s", endpoint, query)
+	}
+
+	resp, err := s.client.doRequest(ctx, http.MethodGet, path, nil, headers)
+	if err != nil {
+		return nil, err
+	}
+
+	var result struct {
+		Value []S_Employee `json:"value"`
+	}
+
+	if err := parseResponse(resp, &result); err != nil {
+		return nil, err
+	}
+
+	return result.Value, nil
+}

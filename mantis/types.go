@@ -247,3 +247,20 @@ type ContractResponse struct {
 	Category               string  `json:"category"`
 	SlaGoal                any     `json:"slaGoal"`
 }
+
+type S_Employee struct {
+	AdUserID     int64      `json:"Ad_User_ID"`
+	Name         string     `json:"Name"`
+	SUserID      string     `json:"S_User_ID"`
+	TipoLider    string     `json:"Tipo_Lider"`
+	Active       bool       `json:"Active"`
+	Module       string     `json:"Module"`
+	EmployeeCode string     `json:"Employee_Code"`
+	Bp           string     `json:"BP"`
+	Unit         string     `json:"Unit"`
+	Terceiro     bool       `json:"Terceiro"`
+	FullTime     bool       `json:"Full_Time"`
+	DataInicio   *time.Time `json:"Data_Inicio"`
+	DataFim      *time.Time `json:"Data_Fim"`
+	CUser        string     `json:"C_User"`
+}

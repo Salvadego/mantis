@@ -65,24 +65,6 @@ func mergeGetReportOptions(opts *GetReportOptions) *GetReportOptions {
 	return def
 }
 
-func joinFilterParts(parts []string, separator string) string {
-	if len(parts) == 0 {
-		return ""
-	}
-
-	if len(parts) == 1 {
-		return parts[0]
-	}
-
-	var result strings.Builder
-	result.WriteString(parts[0])
-	for i := 1; i < len(parts); i++ {
-		result.WriteString(separator + parts[i])
-	}
-
-	return result.String()
-}
-
 func (s *DashboardService) GetReport(
 	ctx context.Context,
 	opts *GetReportOptions,
@@ -142,7 +124,7 @@ func (s *DashboardService) GetReport(
 
 	var filter string
 	if len(filterParts) > 0 {
-		filter = "$filter=" + url.QueryEscape(joinFilterParts(filterParts, " and "))
+		filter = "$filter=" + url.QueryEscape(strings.Join(filterParts, " and "))
 	}
 
 	path := fmt.Sprintf("%s?%s", endpoint, filter)
