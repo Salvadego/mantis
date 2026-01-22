@@ -99,7 +99,7 @@ func (s *EmployeeService) GetEmployeeByName(
 
 func (s *EmployeeService) GetEmployeeList(
 	ctx context.Context,
-	supervisorID *int,
+	supervisorID int,
 ) ([]S_Employee, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -112,10 +112,10 @@ func (s *EmployeeService) GetEmployeeList(
 
 	var queryParts []string
 
-	if supervisorID != nil {
+	if supervisorID != 0 {
 		queryParts = append(
 			queryParts,
-			fmt.Sprintf("$filter=Filter_Supervisor_ID eq %d", *supervisorID),
+			fmt.Sprintf("$filter=Filter_Supervisor_ID eq %d", supervisorID),
 		)
 	}
 
