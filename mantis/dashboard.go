@@ -205,3 +205,29 @@ func (s *DashboardService) GetSupportInfo(
 
 	return result.Value, nil
 }
+
+func (s *DashboardService) GetSupportFile(
+	ctx context.Context,
+	attachment Attachment,
+) (SupportFileResponse, error) {
+	endpoint := fmt.Sprintf("/api/odata/cam/core/system/v1/SupportFiles(File_Name='%s',Guid='%s')", attachment.FileName, attachment.GUID)
+
+	headers := map[string]string{
+		"SourceSystem": "APP",
+	}
+
+	resp, err := s.client.doRequest(ctx, http.MethodGet, endpoint, nil, headers)
+	if err != nil {
+		return SupportFileResponse{}, err
+	}
+
+	var result struct {
+		Value SupportFileResponse `json:"value"`
+	}
+
+	if err := parseResponse(resp, &result); err != nil {
+		return SupportFileResponse{}, err
+	}
+
+	return result.Value, nil
+}

@@ -310,3 +310,11 @@ type Text struct {
 	TdID            string     `json:"TD_ID"`
 	Description     string     `json:"Description"`
 }
+
+type SupportFileResponse struct {
+	CreateAt    string `json:"Create_At"`
+	CreateBy    string `json:"Create_By"`
+	FileContent string `json:"File_Content"`
+	FileName    string `json:"File_Name"`
+	Guid        string
+}
