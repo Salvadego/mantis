@@ -2,6 +2,8 @@ package mantis
 
 import (
 	"context"
+	"crypto/sha1"
+	"encoding/hex"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -20,6 +22,29 @@ type GetReportOptions struct {
 	FilterContractID string
 	ChangeAtFrom     *time.Time
 	ChangeAtTo       *time.Time
+}
+
+func formatTime(t *time.Time) string {
+	if t == nil {
+		return ""
+	}
+	return t.UTC().Format(time.RFC3339)
+}
+
+func (o GetReportOptions) Signature() string {
+	parts := []string{
+		fmt.Sprintf("rsc=%t", o.FilterRSC),
+		"t=" + o.FilterType,
+		"u=" + o.FilterUserID,
+		"c=" + o.FilterContractID,
+		"from=" + formatTime(o.ChangeAtFrom),
+		"to=" + formatTime(o.ChangeAtTo),
+	}
+
+	raw := strings.Join(parts, "|")
+
+	sum := sha1.Sum([]byte(raw))
+	return hex.EncodeToString(sum[:]) // 40-char stable signature
 }
 
 func appendToList[Type comparable](list *[]Type, v Type) {
@@ -209,7 +234,7 @@ func (s *DashboardService) GetSupportInfo(
 func (s *DashboardService) GetSupportFile(
 	ctx context.Context,
 	attachment Attachment,
-) (SupportFileResponse, error) {
+) (Attachment, error) {
 	endpoint := fmt.Sprintf("/api/odata/cam/core/system/v1/SupportFiles(File_Name='%s',Guid='%s')", attachment.FileName, attachment.GUID)
 
 	headers := map[string]string{
@@ -218,15 +243,15 @@ func (s *DashboardService) GetSupportFile(
 
 	resp, err := s.client.doRequest(ctx, http.MethodGet, endpoint, nil, headers)
 	if err != nil {
-		return SupportFileResponse{}, err
+		return Attachment{}, err
 	}
 
 	var result struct {
-		Value SupportFileResponse `json:"value"`
+		Value Attachment `json:"value"`
 	}
 
 	if err := parseResponse(resp, &result); err != nil {
-		return SupportFileResponse{}, err
+		return Attachment{}, err
 	}
 
 	return result.Value, nil

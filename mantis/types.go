@@ -278,11 +278,11 @@ type SupportInfoResponse struct {
 }
 
 type Attachment struct {
-	GUID        string    `json:"Guid"`
+	CreatedAt   time.Time `json:"Created_At"`
+	CreatedBy   CreatedBy `json:"Created_By"`
 	FileContent string    `json:"File_Content"`
 	FileName    string    `json:"File_Name"`
-	CreatedBy   CreatedBy `json:"Created_By"`
-	CreatedAt   time.Time `json:"Created_At"`
+	GUID        string    `json:"Guid"`
 }
 
 type CreatedBy struct {
@@ -311,10 +311,3 @@ type Text struct {
 	Description     string     `json:"Description"`
 }
 
-type SupportFileResponse struct {
-	CreateAt    string `json:"Create_At"`
-	CreateBy    string `json:"Create_By"`
-	FileContent string `json:"File_Content"`
-	FileName    string `json:"File_Name"`
-	Guid        string
-}
